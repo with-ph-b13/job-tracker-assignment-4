@@ -95,9 +95,22 @@ let activeTab = "All";
 function renderJobs() {
     listContainer.innerHTML = "";
 
+    const allCount = jobs.length;
+    const interviewCount = jobs.filter((job) => job.status === "INTERVIEW").length;
+    const rejectedCount = jobs.filter((job) => job.status === "REJECTED").length;
+
+    document.getElementById("all-count").innerText = allCount;
+    document.getElementById("i-count").innerText = interviewCount;
+    document.getElementById("r-count").innerText = rejectedCount;
+
+    const availableJobs = document.querySelectorAll("#all-count");
+    if (availableJobs.length > 1) {
+        availableJobs[1].innerText = allCount;
+    }
+
     let newjobs = jobs;
     if (activeTab !== "All") {
-        newjobs = jobs.filter((j) => j.status === activeTab.toUpperCase());
+        newjobs = jobs.filter((job) => job.status === activeTab.toUpperCase());
     }
 
     const emptyState = document.getElementById("empty-state");
