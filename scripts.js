@@ -99,10 +99,12 @@ function renderJobs() {
     if (activeTab !== "All") {
         newjobs = jobs.filter((j) => j.status === activeTab.toUpperCase());
     }
+
+    const emptyState = document.getElementById("empty-state");
     if (newjobs.length === 0) {
-        const emptyState = document.getElementById("empty-state");
         emptyState.classList.remove("hidden");
-        return;
+    } else {
+        emptyState.classList.add("hidden");
     }
 
     for (let i = 0; i < newjobs.length; i++) {
@@ -158,19 +160,19 @@ function renderJobs() {
             updateJobStatus(job.id, "REJECTED");
         };
 
-        function updateJobStatus(id, status) {
-            jobs = jobs.map((job) => {
-                if (job.id === id) {
-                    return { ...job, status };
-                }
-                return job;
-            });
-            renderJobs();
-        }
-
         jobElement.appendChild(delBtn);
         listContainer.appendChild(jobElement);
     }
+}
+
+function updateJobStatus(id, status) {
+    jobs = jobs.map((job) => {
+        if (job.id === id) {
+            return { ...job, status };
+        }
+        return job;
+    });
+    renderJobs();
 }
 
 function deleteJob(id) {
