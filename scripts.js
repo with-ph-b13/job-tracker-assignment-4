@@ -99,6 +99,11 @@ function renderJobs() {
     if (activeTab !== "All") {
         newjobs = jobs.filter((j) => j.status === activeTab.toUpperCase());
     }
+    if (newjobs.length === 0) {
+        const emptyState = document.getElementById("empty-state");
+        emptyState.classList.remove("hidden");
+        return;
+    }
 
     for (let i = 0; i < newjobs.length; i++) {
         const job = newjobs[i];
